@@ -2,7 +2,7 @@
 #include "Game.hpp"
 #include "Node.hpp"
 struct MCTS{
-    int RUN();
+    int RUN(Node *);
     Node *SELECT(Node *);
     Node *EXPAND(Node *);
     int SIMULATE(Node *);

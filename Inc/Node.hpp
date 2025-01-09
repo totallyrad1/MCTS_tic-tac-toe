@@ -9,10 +9,11 @@ struct Node{
         int root;
         float score;
         int visited;
+        int currAction;
         Node(){
             Parent = NULL;
         }
-        Node(Game state, Node* parent, int root){
+        Node(Game state, Node* parent, int root, int action = -1){
             this->state = state;
             this->score = 0;
             this->visited = 0;

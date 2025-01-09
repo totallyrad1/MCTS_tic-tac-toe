@@ -1,6 +1,6 @@
 #include "../Inc/MCTS.hpp"
 
-int MCTS::RUN(Node *node){
+int MCTS::RUN(Node *node, int iterations){
     srand(time(NULL));
     // while true
         // select node
@@ -30,22 +30,21 @@ Node *MCTS::EXPAND(Node *node){
     if(!node)
         return NULL;
     int randomMove = rand() % node->actions.size();
+    int action = node->actions[randomMove];
     Game gameCopy = node->state;
-    gameCopy.makeMove(randomMove);
-    Node *newNode = new Node(gameCopy, node, 0);
+    gameCopy.makeMove(action);
+    node->actions.erase(node->actions.begin() + randomMove);
+    Node *newNode = new Node(gameCopy, node, 0, action);
     node->children.push_back(newNode);
     return newNode;
 }
 int MCTS::SIMULATE(Node *node){
 
 }
-void MCTS::BACKPROPAGATE(Node *node){
+void MCTS::BACKPROPAGATE(Node *node, int score){
     while(node){
-        Node *parent = node->Parent;
-        if(!parent)
-            return ;
-        parent->visited++;
-        parent->score = node->score;
-        node = parent;
+        node->visited++;
+        node->score += score;
+        node = node->Parent;
     }
 }

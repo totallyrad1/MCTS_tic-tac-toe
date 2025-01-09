@@ -102,11 +102,13 @@ void Game::changePlayer(){
 
 vector<int> Game::generatePossibleMoves(){
     vector<int> result;
+    int move = 0;
     for(size_t x = 0; x <board.size(); x++){
         for(size_t y = 0; y < board[x].size(); y++){
             if(board[x][y] == '-'){
-                result.push_back((x * 3) + y);
+                result.push_back(move);
             }
+            move++;
         }
     }
     return result;

@@ -1,6 +1,7 @@
 #include "Inc/MCTS.hpp"
 #include "Inc/Game.hpp"
 #include "Inc/Node.hpp"
+#include <unistd.h>
 using namespace std;
 int main(){
     Game game;
@@ -8,17 +9,29 @@ int main(){
     string line;
     while(game.gameEnded() == -1){
         system("clear");
-        cout << "PLAYER " << game.currentPlayer + 1 << " TURN " << endl;
-        game.printBoard();
-        getline(cin, line);
-        stringstream ss(line);
-        ss >> move;
-        if(!ss.eof() || ss.fail()){
-            cerr << "Invalid move \n";
-            continue;
+        if(game.currentPlayer == 0){
+            cout << "PLAYER " << game.currentPlayer + 1 << " TURN " << endl;
+            game.printBoard();
+            getline(cin, line);
+            stringstream ss(line);
+            ss >> move;
+            if(!ss.eof() || ss.fail()){
+                cerr << "Invalid move \n";
+                continue;
+            }
+            if(game.makeMove(move))
+                game.changePlayer();
+        }else{
+            cout << "AI TURN " << endl;
+            game.printBoard();
+            Node *currState = new Node(game, NULL, 1, -1);
+            MCTS mcts;
+            int aimove = mcts.RUN(currState, 7000);
+            cerr << "aimove "<<aimove << endl;
+            if(game.makeMove(aimove))
+                game.changePlayer();
+            sleep(2);
         }
-        if(game.makeMove(move))
-            game.changePlayer();
     }
     system("clear");
     game.printBoard();

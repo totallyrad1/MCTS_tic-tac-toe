@@ -5,13 +5,13 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
+#include <unistd.h>
 using namespace std;
 class Game {
-    private:
+    public:
         vector<vector<int> > board;
         int winner;
         int movesAvailable;
-    public:
         int currentPlayer;
         Game();
         ~Game();

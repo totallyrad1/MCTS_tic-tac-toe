@@ -5,6 +5,6 @@ struct MCTS{
     int RUN(Node *, int iterations);
     Node *SELECT(Node *);
     Node *EXPAND(Node *);
-    int SIMULATE(Node *);
+    float SIMULATE(Node *);
     void BACKPROPAGATE(Node *, int score);
 };

@@ -21,14 +21,8 @@ int MCTS::RUN(Node *node, int iterations){
     return result->currAction;
 }
 Node *MCTS::SELECT(Node *node){
-    if(!node)
-        return NULL;
-    if(node->children.empty())
+    if(!node->actions.empty())
         return node;
-    for(size_t i = 0; i < node->children.size(); i++){
-        if(!node->children[i]->actions.empty())
-            return node->children[i];
-    }
     float biggestUCB = -1;
     Node *result = NULL;
     for(size_t i = 0; i < node->children.size(); i++){
@@ -37,14 +31,10 @@ Node *MCTS::SELECT(Node *node){
             result = node->children[i];
         }
     }
-    return result;
+    return SELECT(result);
 }
 
 Node *MCTS::EXPAND(Node *node){
-    if(!node)
-        return NULL;
-    if(node->actions.empty())
-        return node;
     int randomMove = rand() % node->actions.size();
     int action = node->actions[randomMove];
     Game gameCopy = node->state;

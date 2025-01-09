@@ -3,6 +3,10 @@
         "iostream": "cpp",
         "vector": "cpp",
         "iomanip": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "bitset": "cpp",
+        "locale": "cpp",
+        "memory": "cpp",
+        "string": "cpp"
     }
 }

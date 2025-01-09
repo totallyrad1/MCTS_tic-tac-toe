@@ -98,5 +98,16 @@ void Game::changePlayer(){
         currentPlayer = 1;
     else
         currentPlayer = 0;
+}
 
+vector<int> Game::generatePossibleMoves(){
+    vector<int> result;
+    for(size_t x = 0; x <board.size(); x++){
+        for(size_t y = 0; y < board[x].size(); y++){
+            if(board[x][y] == '-'){
+                result.push_back((x * 3) + y);
+            }
+        }
+    }
+    return result;
 }

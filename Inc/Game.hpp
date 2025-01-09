@@ -20,4 +20,5 @@ class Game {
         int checkWin();
         int makeMove(int move);
         void changePlayer();
+        vector<int> generatePossibleMoves();
 };

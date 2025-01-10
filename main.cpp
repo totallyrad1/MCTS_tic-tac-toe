@@ -31,7 +31,7 @@ int main(){
             cerr << "aimove "<<aimove << endl;
             if(game.makeMove(aimove))
                 game.changePlayer();
-            sleep(2);
+            // sleep(2);
         }
     }
     system("clear");

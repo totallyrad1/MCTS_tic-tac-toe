@@ -9,6 +9,7 @@
         "memory": "cpp",
         "string": "cpp",
         "__node_handle": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "algorithm": "cpp"
     }
 }

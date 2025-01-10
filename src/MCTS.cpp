@@ -1,5 +1,6 @@
 #include "../Inc/MCTS.hpp"
 #include <float.h>
+#include <random>
 
 int MCTS::RUN(Node *node, int iterations){
     // srand(time(0));
@@ -21,9 +22,9 @@ int MCTS::RUN(Node *node, int iterations){
             result = root->children[i];
         }
     }
-    cout << "BESTMOVE " << result->currAction << endl;
-    printTree(root, 0); 
-    sleep(100);
+    // cout << "BESTMOVE " << result->currAction << endl;
+    // printTree(root, 0); 
+    // sleep(100);
     return result->currAction;
 }
 
@@ -79,11 +80,6 @@ Node *MCTS::EXPAND(Node *node){
     if(gameCopy.makeMove(action))
         gameCopy.changePlayer();
     Node *newNode = new Node(gameCopy, node, 0, action);
-    // vector<int> actionsLeft;
-    // for(size_t i = 0; i < newNode->actions.size(); i++){
-    //     if(newNode->actions[i] !=  action)
-    //         actionsLeft.push_back(newNode->actions[i]);
-    // }
     node->children.push_back(newNode);
     return newNode;
 }

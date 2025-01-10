@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.hpp"
+#include <float.h>
 struct Node{
     public:
         Node *Parent;

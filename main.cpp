@@ -27,7 +27,7 @@ int main(){
             game.printBoard();
             Node *currState = new Node(game, NULL, 1, -1);
             MCTS mcts;
-            int aimove = mcts.RUN(currState, 10000);
+            int aimove = mcts.RUN(currState, 1000);
             cerr << "aimove "<<aimove << endl;
             if(game.makeMove(aimove))
                 game.changePlayer();

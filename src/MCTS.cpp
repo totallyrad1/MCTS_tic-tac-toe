@@ -3,7 +3,6 @@
 #include <random>
 
 int MCTS::RUN(Node *node, int iterations){
-    // srand(time(0));
     Node *root = node;
     while(iterations > 0){
         Node * selectedNode = SELECT(node);
@@ -14,11 +13,11 @@ int MCTS::RUN(Node *node, int iterations){
         BACKPROPAGATE(expandedNode, score);
         iterations--;
     }
-    float biggestUCB = -1;
+    float maxVisits = -1;
     Node *result = NULL;
     for(size_t i = 0; i < root->children.size(); i++){
-        if(root->children[i]->UCB1() > biggestUCB){
-            biggestUCB = root->children[i]->UCB1();
+        if(root->children[i]->visited > maxVisits){
+            maxVisits = root->children[i]->visited;
             result = root->children[i];
         }
     }
@@ -30,15 +29,13 @@ int MCTS::RUN(Node *node, int iterations){
 
 void MCTS::printIndentation(int level) {
     for (int i = 0; i < level; i++) {
-        cout << "  ";  // Two spaces per level
+        cout << "  ";
     }
 }
 
-// Recursive function to print the MCTS tree
 void MCTS::printTree(Node* node, int level) {
     if (!node) return;
 
-    // Print the current node's details
     printIndentation(level);
     cout << "Action: " << node->currAction
          << ", Score: " << node->score
@@ -48,7 +45,6 @@ void MCTS::printTree(Node* node, int level) {
          << ", MovesLeft: " << node->actions.size()
          << endl;
 
-    // Recursively print child nodes
     for (Node* child : node->children) {
         printTree(child, level + 1);
     }
@@ -89,14 +85,15 @@ Node *MCTS::EXPAND(Node *node){
 }
 
 float MCTS::SIMULATE(Node *node){
-    Node *temp = new Node(*node);
-    while(temp->state.gameEnded() == -1){
-        temp = EXPAND(temp);
+    Game gameCopy = node->state;
+    while(gameCopy.gameEnded() == -1){
+        auto actions = gameCopy.generatePossibleMoves();
+        int randomMove = rand() % actions.size();
+        gameCopy.makeMove(actions[randomMove]);
+        gameCopy.changePlayer();
     }
-    int winner = temp->state.gameEnded();
-    if(winner == 1)
-        return 1.0F;
-    return 0.0F;
+    int winner = gameCopy.gameEnded();
+    return (winner == 1) ? 1.0F : 0.0F;
 }
 void MCTS::BACKPROPAGATE(Node *node, int score){
     while(node){

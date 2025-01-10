@@ -44,7 +44,9 @@ int main(){
     int winner = game.gameEnded();
     if(winner == 2)
         cout << "DRAW" << endl;
+    else if( winner == 1)
+        cout << "AI WON\n";
     else
-        cout << "PLAYER " << winner +1 << " WON\n";
+        cout << "YOU WON\n";
     return 0;
 }

@@ -25,17 +25,17 @@ int Game::gameEnded(){
     if(!movesAvailable){
         int winner = checkWin();
         if(winner == 'X')
-            return 0; // player X won player 1
+            return 0;
         else if(winner == 'O')
-            return 1; // player O won player 2
-        return 2; // DRAW
+            return 1;
+        return 2;
     }
     int winner = checkWin();
     if(winner == 'X')
-        return 0; // player X won player 1
+        return 0;
     else if(winner == 'O')
-        return 1; // player O won player 2
-    return (-1); // game didnt end yet
+        return 1;
+    return (-1);
 }
 
 int Game::checkWin(){

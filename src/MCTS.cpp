@@ -57,6 +57,10 @@ void MCTS::printTree(Node* node, int level) {
 Node *MCTS::SELECT(Node *node){
     if(!node->actions.empty() || (node->state.gameEnded() != -1) || (node->requiredAction == 0))
         return node;
+    for(size_t i = 0; i < node->children.size(); i++){
+        if(!node->children[i]->actions.empty())
+            return SELECT(node->children[i]);
+    }
     float bestUCB = (node->state.currentPlayer == 1) ? -FLT_MAX : FLT_MAX;;
     Node *result = NULL;
     for(size_t i = 0; i < node->children.size(); i++){
@@ -91,8 +95,8 @@ float MCTS::SIMULATE(Node *node){
     }
     int winner = temp->state.gameEnded();
     if(winner == 1)
-        return 1;
-    return 0;
+        return 1.0F;
+    return 0.0F;
 }
 void MCTS::BACKPROPAGATE(Node *node, int score){
     while(node){

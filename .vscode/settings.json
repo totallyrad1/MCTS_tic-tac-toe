@@ -10,6 +10,7 @@
         "string": "cpp",
         "__node_handle": "cpp",
         "ostream": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "__locale": "cpp"
     }
 }

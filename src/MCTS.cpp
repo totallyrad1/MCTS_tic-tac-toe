@@ -2,11 +2,13 @@
 #include <float.h>
 
 int MCTS::RUN(Node *node, int iterations){
-    srand(time(NULL));
+    // srand(time(0));
     Node *root = node;
     while(iterations > 0){
         Node * selectedNode = SELECT(node);
-        Node * expandedNode = EXPAND(selectedNode);
+        Node * expandedNode = selectedNode;
+        if(selectedNode->actions.size())
+            expandedNode = EXPAND(selectedNode); 
         float score = SIMULATE(expandedNode);
         BACKPROPAGATE(expandedNode, score);
         iterations--;
@@ -19,6 +21,7 @@ int MCTS::RUN(Node *node, int iterations){
             result = root->children[i];
         }
     }
+    cout << "BESTMOVE " << result->currAction << endl;
     printTree(root, 0); 
     sleep(100);
     return result->currAction;
@@ -51,7 +54,7 @@ void MCTS::printTree(Node* node, int level) {
 }
 
 Node *MCTS::SELECT(Node *node){
-    if(!node->actions.empty())
+    if(!node->actions.empty() || (node->state.gameEnded() != -1) || (node->requiredAction == 0))
         return node;
     float bestUCB = (node->state.currentPlayer == 1) ? -FLT_MAX : FLT_MAX;;
     Node *result = NULL;
@@ -64,14 +67,10 @@ Node *MCTS::SELECT(Node *node){
             result = Children;
         }
     }
-    if(!result)
-        return node;
     return SELECT(result);
 }
 
 Node *MCTS::EXPAND(Node *node){
-    if(node->actions.empty())
-        return node;
     int randomMove = rand() % node->actions.size();
     int action = node->actions[randomMove];
     swap(node->actions[randomMove], node->actions[node->actions.size() - 1]);
@@ -102,10 +101,7 @@ float MCTS::SIMULATE(Node *node){
 void MCTS::BACKPROPAGATE(Node *node, int score){
     while(node){
         node->visited++;
-        if(node->state.currentPlayer == 0)
-            node->score += score;
-        else
-            node->score -= score;
+        node->score += score;
         node = node->Parent;
     }
 }

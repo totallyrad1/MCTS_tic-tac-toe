@@ -1,7 +1,6 @@
 #include "../Inc/Game.hpp"
 using namespace std;
 Game::Game(){
-    srand(time(NULL));
     board = vector<vector<int> >(3, vector<int>(3, '-'));
     winner = -1;
     currentPlayer = rand() % 2;

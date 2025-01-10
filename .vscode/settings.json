@@ -11,6 +11,7 @@
         "__node_handle": "cpp",
         "ostream": "cpp",
         "algorithm": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "chrono": "cpp"
     }
 }

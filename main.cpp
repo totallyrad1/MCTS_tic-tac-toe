@@ -2,6 +2,7 @@
 #include "Inc/Game.hpp"
 #include "Inc/Node.hpp"
 #include <unistd.h>
+#include <chrono>
 using namespace std;
 int main(){
     srand(time(0));
@@ -27,11 +28,15 @@ int main(){
             game.printBoard();
             Node *currState = new Node(game, NULL, 1, -1);
             MCTS mcts;
-            int aimove = mcts.RUN(currState, 1000);
-            cerr << "aimove "<<aimove << endl;
+            auto start = std::chrono::high_resolution_clock::now();
+            int iterations = 1000;
+            int aimove = mcts.RUN(currState, iterations);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
             if(game.makeMove(aimove))
                 game.changePlayer();
-            // sleep(2);
+            cout << "AI decided " << aimove << " in " << (int)(duration.count()/1000.0) << " microseconds " << iterations << " iterations" << endl;
+            sleep(1);
         }
     }
     system("clear");

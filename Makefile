@@ -2,7 +2,7 @@ NAME = TicTacToe-Ai
 SRC = src/Game.cpp src/MCTS.cpp src/Node.cpp main.cpp
 OBJ = ${SRC:.cpp=.o}
 CC = c++
-CPPFLAGS = -Wall -Wextra -Werror -g
+CPPFLAGS = -Wall -Wextra -Werror -g -std=c++17
 
 all : $(NAME)
 

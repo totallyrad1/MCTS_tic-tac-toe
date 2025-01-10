@@ -16,7 +16,7 @@ struct Node{
         Node(Game state, Node* parent, int root, int action){
             this->state = state;
             this->score = 0;
-            this->visited = 0;
+            this->visited = 1;
             this->root = root;
             this->Parent = parent;
             this->actions = state.generatePossibleMoves();
